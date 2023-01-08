@@ -6,7 +6,7 @@ User = get_user_model()
 class Group(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
-    descriptions = models.TextField()
+    description = models.TextField()
 
 class Post(models.Model):
     text = models.TextField()
@@ -30,7 +30,8 @@ class Comment(models.Model):
         Post, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
     created = models.DateTimeField(
-        'Дата добавления', auto_now_add=True, db_index=True)
+        'Дата добавления', auto_now_add=True)
+    
 
 class Follow(models.Model):
     user = models.ForeignKey(
