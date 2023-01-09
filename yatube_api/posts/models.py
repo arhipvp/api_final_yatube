@@ -3,10 +3,12 @@ from django.db import models
 
 User = get_user_model()
 
+
 class Group(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField()
+
 
 class Post(models.Model):
     text = models.TextField()
@@ -24,19 +26,28 @@ class Comment(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name='comments', null=False, blank=False)
-    text = models.TextField(null=False, blank=False)
+        Post, on_delete=models.CASCADE, related_name='comments')
+    text = models.TextField()
     created = models.DateTimeField(
         'Дата добавления', auto_now_add=True)
-    
+
 
 class Follow(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True, related_name='follower'
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='follower'
     )
     following = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True, related_name='following'
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='following'
     )
+
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['user', 'following'],
